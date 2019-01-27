@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator, TouchableHighlight, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator, TouchableHighlight, View, TextInput} from 'react-native';
 import {FormLabel, FormInput, Button, Divider} from 'react-native-elements'
 import firebase from '../firebase.js';
 
@@ -17,25 +17,21 @@ export default class LoginScreen extends React.Component {
 
   state = {
     email: '',
+    nickname: '',
     password: '',
     user: null,
     loading: false
   };
 
-
   didFocusSubscription = null;
 
   componentDidMount() {
-    this.history.push('Login componentDidMount');
-    console.log(this.history);
     this.didFocusSubscription = this.props.navigation.addListener(
       'willFocus',
       payload => {
         // console.log('Login willFocus', payload);
-        this.history.push('Login willFocus');
-        console.log(this.history);
         const user = firebase.auth().currentUser;
-        console.log('Login user', user);
+        // console.log('Login user', user);
         if (user !== this.state.user) {
           this.setState({user:user});
         }
@@ -106,7 +102,7 @@ export default class LoginScreen extends React.Component {
         );
 
       jsx = (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps={'always'} >
           <View style={{ marginRight:15, marginBottom:25, marginLeft:15, flex: 1, flexDirection: 'row', justifyContent:'center'}}>
             <Text> New to SunVibe? </Text>
             <TouchableHighlight onPress={this.signUpHandler}>
