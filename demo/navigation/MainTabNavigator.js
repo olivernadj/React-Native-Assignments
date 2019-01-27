@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import LinksScreen from '../screens/LinksScreen';
 import LoginScreen from '../screens/LoginScreen';
+import WalletScreen from '../screens/WalletScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const HomeStack = createStackNavigator({
@@ -56,6 +57,20 @@ LoginStack.navigationOptions = {
   ),
 };
 
+const WalletStack = createStackNavigator({
+  Wallet: WalletScreen,
+});
+
+WalletStack.navigationOptions = {
+  tabBarLabel: 'Wallet',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-wallet' : 'md-wallet'}
+    />
+  ),
+};
+
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
 });
@@ -74,5 +89,6 @@ export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
   LoginStack,
+  WalletStack,
   SettingsStack,
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator, TouchableHighlight, View, TextInput} from 'react-native';
+import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator, TouchableHighlight, View, AsyncStorage} from 'react-native';
 import {FormLabel, FormInput, Button, Divider} from 'react-native-elements'
 import firebase from '../firebase.js';
 
@@ -45,11 +45,16 @@ export default class LoginScreen extends React.Component {
     }
   }
 
-  loginHandler = () => {
+  loginHandler = async () => {
     this.setState({loading:true});
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((result) => {
         const user = firebase.auth().currentUser;
+        if (user !== null) {
+          AsyncStorage.setItem('userToken', 'abc').then(() => {
+            this.props.navigation.navigate('Main');
+          });
+        }
         this.setState({loading:false, user:user});
         // console.log('onfulfilled', result);
         // console.log('firebase.auth', firebase.auth().currentUser);

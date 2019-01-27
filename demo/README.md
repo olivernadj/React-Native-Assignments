@@ -8,12 +8,13 @@
 
 The following **required** functionality is completed:
 
--[ ] User Auth
+- [ ] User Auth
   - [x] Log in 
   - [x] Sign out
-  - [ ] Register...
+  - [x] Register
+  - [ ] Handle routing for [authentication flow](https://reactnavigation.org/docs/en/auth-flow.html).
 - [ ] User wallet 
-  - [ ] See wallet
+  - [ ] See wallet...
   - [ ] Topup
   - [ ] Withdraw
   - [ ] Transaction history
