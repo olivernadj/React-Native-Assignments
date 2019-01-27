@@ -4,6 +4,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import SignUpScreen from '../screens/SignUpScreen';
 import LinksScreen from '../screens/LinksScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -42,6 +43,7 @@ LinksStack.navigationOptions = {
 
 const LoginStack = createStackNavigator({
   Login: LoginScreen,
+  SignUp: SignUpScreen,
 });
 
 LoginStack.navigationOptions = {

@@ -1,6 +1,6 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator} from 'react-native';
-import {FormLabel, FormInput, Button} from 'react-native-elements'
+import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator, TouchableHighlight, View} from 'react-native';
+import {FormLabel, FormInput, Button, Divider} from 'react-native-elements'
 import firebase from '../firebase.js';
 
 
@@ -13,21 +13,39 @@ export default class LoginScreen extends React.Component {
         android: {fontFamily: 'Roboto'},
       }),
     },
-    user: null,
-    loading: false
   };
 
   state = {
     email: '',
     password: '',
-    loading: false,
+    user: null,
+    loading: false
   };
 
+
+  didFocusSubscription = null;
+
   componentDidMount() {
-    console.log('firebase.auth', firebase.auth().currentUser);
-    const user = firebase.auth().currentUser;
-    if (user !== null) {
-      this.setState({user:user})
+    this.history.push('Login componentDidMount');
+    console.log(this.history);
+    this.didFocusSubscription = this.props.navigation.addListener(
+      'willFocus',
+      payload => {
+        // console.log('Login willFocus', payload);
+        this.history.push('Login willFocus');
+        console.log(this.history);
+        const user = firebase.auth().currentUser;
+        console.log('Login user', user);
+        if (user !== this.state.user) {
+          this.setState({user:user});
+        }
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    if (this.didFocusSubscription !== null) {
+      this.didFocusSubscription.remove();
     }
   }
 
@@ -37,8 +55,8 @@ export default class LoginScreen extends React.Component {
       .then((result) => {
         const user = firebase.auth().currentUser;
         this.setState({loading:false, user:user});
-        console.log('onfulfilled', result);
-        console.log('firebase.auth', firebase.auth().currentUser);
+        // console.log('onfulfilled', result);
+        // console.log('firebase.auth', firebase.auth().currentUser);
       })
       .catch((error) => {
         this.setState({loading:false});
@@ -57,8 +75,8 @@ export default class LoginScreen extends React.Component {
     firebase.auth().signOut()
       .then((result) => {
         this.setState({user:null, loading:false});
-        console.log('onfulfilled', result);
-        console.log('firebase.auth', firebase.auth().currentUser);
+        // console.log('onfulfilled', result);
+        // console.log('firebase.auth', firebase.auth().currentUser);
       })
       .catch((error) => {
         this.setState({loading:false});
@@ -72,20 +90,30 @@ export default class LoginScreen extends React.Component {
       });
   };
 
-  render() {
+  signUpHandler = () => {
+    console.log('signUpHandler');
+    this.props.navigation.navigate('SignUp');
+  };
 
-    let content = null;
+  render() {
+    let jsx = null; // finally return jsx;
 
     if (this.state.user === null) {
-
       const formFooter = (this.state.loading) ? (
           <ActivityIndicator size="large" color="#ccc" buttonStyle={{marginTop:30}}/>
         ):(
           <Button icon={{name: 'lock'}} title='Log in' onPress={this.loginHandler} buttonStyle={{marginTop: 30}}/>
         );
 
-      return (
+      jsx = (
         <ScrollView style={styles.container}>
+          <View style={{ marginRight:15, marginBottom:25, marginLeft:15, flex: 1, flexDirection: 'row', justifyContent:'center'}}>
+            <Text> New to SunVibe? </Text>
+            <TouchableHighlight onPress={this.signUpHandler}>
+              <Text style={{fontWeight: 'bold', color:'blue', textDecorationLine: 'underline'}}> Sign up </Text>
+            </TouchableHighlight>
+          </View>
+          <Divider style={{ backgroundColor: '#ccc' }} />
           <FormLabel>Email</FormLabel>
           <FormInput onChangeText={(v) => this.setState({email: v})}
                      containerStyle={{borderColor: '#ccc', borderWidth: 1}}/>
@@ -102,14 +130,16 @@ export default class LoginScreen extends React.Component {
           <Button icon={{name: 'lock-open'}} title='Sign out' onPress={this.signOutHandler} buttonStyle={{marginTop:30}}/>
         );
 
-      return (
+      jsx = (
         <ScrollView style={styles.container}>
-          <Text>You are signed</Text>
+          <View style={{ marginRight:15, marginBottom:25, marginLeft:15, flex: 1, flexDirection: 'row', justifyContent:'center'}}>
+            <Text>You are signed in.</Text>
+          </View>
           {formFooter}
         </ScrollView>
       );
     }
-
+    return jsx;
 
   }
 }
