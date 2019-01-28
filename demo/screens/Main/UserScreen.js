@@ -1,10 +1,10 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator, TouchableHighlight, View, AsyncStorage} from 'react-native';
 import {FormLabel, FormInput, Button, Divider} from 'react-native-elements'
-import firebase from '../firebase.js';
+import firebase from '../../firebase.js';
 
 
-export default class LoginScreen extends React.Component {
+export default class UserScreen extends React.Component {
   static navigationOptions = {
     title: 'Log in',
     headerTitleStyle: {
@@ -50,12 +50,12 @@ export default class LoginScreen extends React.Component {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((result) => {
         const user = firebase.auth().currentUser;
-        if (user !== null) {
-          AsyncStorage.setItem('userToken', 'abc').then(() => {
-            this.props.navigation.navigate('Main');
-          });
-        }
         this.setState({loading:false, user:user});
+        if (user !== null) {
+          // AsyncStorage.setItem('userToken', 'abc').then(() => {
+          //  this.props.navigation.navigate('Main');
+          // });
+        }
         // console.log('onfulfilled', result);
         // console.log('firebase.auth', firebase.auth().currentUser);
       })
@@ -76,6 +76,7 @@ export default class LoginScreen extends React.Component {
     firebase.auth().signOut()
       .then((result) => {
         this.setState({user:null, loading:false});
+        // this.props.navigation.navigate('Unauth');
         // console.log('onfulfilled', result);
         // console.log('firebase.auth', firebase.auth().currentUser);
       })

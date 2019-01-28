@@ -1,7 +1,7 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator, TouchableHighlight, View} from 'react-native';
-import {FormLabel, FormInput, Button, Divider} from 'react-native-elements'
-import firebase from '../firebase.js';
+import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator, AsyncStorage, View} from 'react-native';
+import {FormLabel, FormInput, Button} from 'react-native-elements'
+import firebase from '../../firebase.js';
 
 
 export default class SignUpScreen extends React.Component {
@@ -35,9 +35,14 @@ export default class SignUpScreen extends React.Component {
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then((result) => {
         const user = firebase.auth().currentUser;
-        console.log('onfulfilled', result);
-        console.log('firebase.auth', firebase.auth().currentUser);
-        this.setState({user:user, loading:false});
+        if (user !== null) {
+          // AsyncStorage.setItem('alert', 'You signed up successfully.').then(() => {
+          //   this.props.navigation.navigate('Main');
+          // });
+        }
+        // console.log('onfulfilled', result);
+        // console.log('firebase.auth', firebase.auth().currentUser);
+        // this.setState({user:user, loading:false});
       })
       .catch((error) => {
         this.setState({loading:false});

@@ -10,11 +10,63 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
-import { MonoText } from '../components/StyledText';
+import { MonoText } from '../../components/StyledText';
+import firebase from "../../firebase";
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
+  };
+
+  // didFocusSubscription = null;
+  //
+  // componentDidMount() {
+  //
+  //   const user = firebase.auth().currentUser;
+  //   console.log('Main Home user', user);
+  //   if (user !== null) {
+  //     this.props.navigation.navigate('Main');
+  //   }
+  //
+  //   this.didFocusSubscription = this.props.navigation.addListener(
+  //     'willFocus',
+  //     payload => {
+  //       const user = firebase.auth().currentUser;
+  //       // console.log('Main Home user', user);
+  //       if (user !== null) {
+  //         this.props.navigation.navigate('Main');
+  //       }
+  //     }
+  //   );
+  // }
+  //
+  // componentWillUnmount() {
+  //   if (this.didFocusSubscription !== null) {
+  //     this.didFocusSubscription.remove();
+  //   }
+  // }
+
+  componentDidMount() {
+    console.log('Main componentDidMount');
+    // Bind the variable to the instance of the class.
+    this.authFirebaseListener = firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
+
+  }
+
+  componentWillUnmount() {
+    console.log('Main componentWillUnmount');
+    this.authFirebaseListener && this.authFirebaseListener() // Unlisten it by calling it as a function
+  }
+
+  onAuthStateChanged = user => {
+    console.log('Main onAuthStateChanged');
+    if (user !== null) {
+      // console.log('Main navigate to main');
+      // this.props.navigation.navigate('Main');
+    } else {
+      console.log('Main navigate to Unauth');
+      this.props.navigation.navigate('Unauth');
+    }
   };
 
   render() {
@@ -25,8 +77,8 @@ export default class HomeScreen extends React.Component {
             <Image
               source={
                 __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
+                  ? require('../../assets/images/robot-dev.png')
+                  : require('../../assets/images/robot-prod.png')
               }
               style={styles.welcomeImage}
             />

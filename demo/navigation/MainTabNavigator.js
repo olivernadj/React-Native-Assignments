@@ -3,12 +3,10 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import SignUpScreen from '../screens/SignUpScreen';
-import LinksScreen from '../screens/LinksScreen';
-import LoginScreen from '../screens/LoginScreen';
-import WalletScreen from '../screens/WalletScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import HomeScreen from '../screens/Main/HomeScreen';
+import LinksScreen from '../screens/Main/LinksScreen';
+import UserScreen from '../screens/Main/UserScreen';
+import WalletScreen from '../screens/Main/WalletScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -42,21 +40,6 @@ LinksStack.navigationOptions = {
   ),
 };
 
-const LoginStack = createStackNavigator({
-  Login: LoginScreen,
-  SignUp: SignUpScreen,
-});
-
-LoginStack.navigationOptions = {
-  tabBarLabel: 'Log in',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-lock' : 'md-lock'}
-    />
-  ),
-};
-
 const WalletStack = createStackNavigator({
   Wallet: WalletScreen,
 });
@@ -71,16 +54,16 @@ WalletStack.navigationOptions = {
   ),
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const UserStack = createStackNavigator({
+  User: UserScreen,
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+UserStack.navigationOptions = {
+  tabBarLabel: 'Profile',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+      name={Platform.OS === 'ios' ? 'ios-person' : 'md-person'}
     />
   ),
 };
@@ -88,7 +71,6 @@ SettingsStack.navigationOptions = {
 export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
-  LoginStack,
+  UserStack,
   WalletStack,
-  SettingsStack,
 });

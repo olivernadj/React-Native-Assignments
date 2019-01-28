@@ -12,10 +12,10 @@ The following **required** functionality is completed:
   - [x] Log in 
   - [x] Sign out
   - [x] Register
-  - [ ] Handle routing for [authentication flow](https://reactnavigation.org/docs/en/auth-flow.html).
+  - [x] Handle routing for [authentication flow](https://reactnavigation.org/docs/en/auth-flow.html).
 - [ ] User wallet 
   - [ ] See wallet...
-  - [ ] Topup
+  - [ ] Topup...
   - [ ] Withdraw
   - [ ] Transaction history
 - [ ] Marketplace
