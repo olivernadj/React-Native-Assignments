@@ -57,6 +57,6 @@ UnauthLoginStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   UnauthHomeStack,
-  UnauthLinksStack,
+//  UnauthLinksStack,
   UnauthLoginStack,
 });
