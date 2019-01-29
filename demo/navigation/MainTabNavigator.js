@@ -8,6 +8,7 @@ import LinksScreen from '../screens/Main/LinksScreen';
 import UserScreen from '../screens/Main/UserScreen';
 import AccountScreen from '../screens/Main/AccountScreen';
 import AccountItemDetailScreen from '../screens/Main/Account/AccountItemDetailScreen';
+import AccountItemVNDAddScreen from '../screens/Main/Account/AccountItemVNDAddScreen';
 
 const ActivityStack = createStackNavigator({
   Activity: ActivityScreen,
@@ -26,6 +27,7 @@ ActivityStack.navigationOptions = {
 const AccountStack = createStackNavigator({
   Account: AccountScreen,
   AccountItemDetail: AccountItemDetailScreen,
+  AccountItemVNDAdd: AccountItemVNDAddScreen,
 });
 
 AccountStack.navigationOptions = {
@@ -70,6 +72,6 @@ UserStack.navigationOptions = {
 export default createBottomTabNavigator({
   ActivityStack,
   AccountStack,
-  LinksStack,
+  //LinksStack,
   UserStack,
 });

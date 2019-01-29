@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, Platform } from 'react-native';
-import { List } from "react-native-elements";
+import {ActivityIndicator, FlatList, Platform, ScrollView, StyleSheet, TouchableHighlight, View} from 'react-native';
+import {Card, Divider, List, ListItem, Text} from "react-native-elements";
 
 import axios from 'axios';
 
@@ -21,18 +21,29 @@ export default class ActivityScreen extends React.Component {
   };
 
   state = {
-    listMovies: [],
+    activity: [],
     loading: false,
-    page:0,
   };
 
   componentDidMount () {
     console.log('componentDidMount');
-    if (this.state.listMovies.length === 0) {
-      this.loadMore();
-    } else {
-      console.log('this.state.listMovies.length', this.state.listMovies.length);
-    }
+    this.setState({loading: true});
+    const user = firebase.auth().currentUser;
+    console.log('user.uid', user.uid);
+    firebase.database().ref('activity/' + user.uid).once('value', (snapshot) => {
+      const res = snapshot.val();
+      console.log(res);
+      if (res !== null) {
+        const activity = [];
+        for (let key in res) {
+          activity.push({key:key, ...res[key]});
+        }
+        this.setState({loading: false, activity:activity});
+      } else {
+        this.setState({loading: false});
+      }
+    });
+
     // Bind the variable to the instance of the class.
     this.authFirebaseListener = firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
   }
@@ -53,67 +64,65 @@ export default class ActivityScreen extends React.Component {
     }
   };
 
-  fetchNowPlaying = () => {
-    this.setState({
-      loading: true,
-    });
-    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&page=${this.state.page}`, {
-      timeout: 2000
-    }).then((response) => {
-      console.log('response.status', response.status);
-      this.setState( (prevState) => {
-        return {
-          listMovies: [...prevState.listMovies, ...response.data.results],
-          loading: false,
-        }
-      });
-    })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
-  };
-
-  loadMore = () => {
-    console.log('loadMore', this.state.page);
-    this.setState( (prevState) => {
-      return {
-        page: prevState.page + 1
-      }
-    }, () => this.fetchNowPlaying());
-  };
-
-  loadAgain = () => {
-    console.log('loadAgain', this.state.page);
-    this.setState( (prevState) => {
-      return {
-        page: 1,
-        listMovies: []
-      }
-    }, () => this.fetchNowPlaying());
-  };
-
-  render() {
-    // console.log("HomeScreen.js render() this.state.listMovies", this.state.listMovies);
+  renderRow = ({item}) => {
     return (
-      <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-        <FlatList
-          data={this.state.listMovies}
-          refreshing={this.state.loading}
-          onRefresh={this.loadAgain}
-          onEndReachedThreshold={0.5}
-          onEndReached={this.loadMore}
-          renderItem={({item}) => (
-            <ActivityListItem
-              poster_path={item.poster_path}
-              title={item.title}
-              release_date={item.release_date}
-              overview={item.overview}
-              navigation={this.props.navigation}
-            />)}
-          keyExtractor={(item, index) => item.id.toString()}
+      <TouchableHighlight
+        onPress={() => this.props.navigation.navigate('ActivityItemDetail', {
+          item: item,
+        })}
+      >
+        <ListItem
+          containerStyle={{ borderBottomWidth: 0 }}
+          title={item.symbol + ' ' + item.action}
+          subtitle={parseFloat(item.amount).toFixed(2)}
         />
-      </List>
-    );
+      </TouchableHighlight>
+    )
+  };
+
+  render () {
+    let activityList = <ActivityIndicator size="large" color="#ccc" buttonStyle={{marginTop:30}}/>;
+
+    if (this.state.loading === false) {
+
+      // const book = [];
+      // for (let key in this.state.account['book']) {
+      //   book.push({name: key, amount: this.state.account['book'][key], kind: 'book'});
+      // }
+      if (this.state.activity.length !== 0) {
+        activityList = (
+          <FlatList
+            data={this.state.activity}
+            renderItem={this.renderRow}
+            ItemSeparatorComponent={() => (<Divider style={{backgroundColor: '#ccc'}}/>)}
+            keyExtractor={item => item.key.toString()}
+          />
+        );
+      } else {
+        activityList = (
+          <View style={{ margin:50, flex: 1, flexDirection: 'row', justifyContent:'center'}}>
+            <Text> You don't have activity yet. </Text>
+            <TouchableHighlight onPress={() => {this.props.navigation.navigate('Account')}}>
+              <Text style={{fontWeight: 'bold', color:'blue', textDecorationLine: 'underline'}}> Let's make one. </Text>
+            </TouchableHighlight>
+          </View>
+        );
+      }
+    }
+
+    return (
+      <ScrollView style={styles.container}>
+        {activityList}
+      </ScrollView>
+    )
   }
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 30,
+    backgroundColor: '#fff',
+  },
+});

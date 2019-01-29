@@ -22,27 +22,17 @@ export default class AccountScreen extends React.Component {
       },
       wallet: {
         VND: 0,
-        USD: 0
+        ETH: 0
       }
     },
   };
-
-  list = [
-    {
-      name: 'VND',
-      amount: 0
-    },
-    {
-      name: 'SVT',
-      amount: 0
-    }
-  ];
 
   componentDidMount() {
     this.setState({
       loading: true,
     });
-    firebase.database().ref('account/ze78h9SH9lg32swj7VZwh0GuGIl1').once('value', (snapshot) => {
+    const user = firebase.auth().currentUser;
+    firebase.database().ref('account/' + user.uid).once('value', (snapshot) => {
       const res = snapshot.val();
       if (res !== null) {
         const mergedAccount = this.state.account;
@@ -68,7 +58,7 @@ export default class AccountScreen extends React.Component {
         <ListItem
           containerStyle={{ borderBottomWidth: 0 }}
           title={item.name}
-          subtitle={item.amount.toFixed(2)}
+          subtitle={parseFloat(item.amount).toFixed(2)}
         />
       </TouchableHighlight>
     )
@@ -122,7 +112,7 @@ export default class AccountScreen extends React.Component {
         </Card>
         <View style={{ margin:50, flex: 1, flexDirection: 'row', justifyContent:'center'}}>
           <Text> Have a question? </Text>
-          <TouchableHighlight onPress={this.signUpHandler}>
+          <TouchableHighlight onPress={() => {alert("Error: Not implemented yet.");}}>
             <Text style={{fontWeight: 'bold', color:'blue', textDecorationLine: 'underline'}}> View our FAQs </Text>
           </TouchableHighlight>
         </View>
