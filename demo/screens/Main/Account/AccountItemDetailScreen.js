@@ -1,10 +1,9 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View, Text, Platform} from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
 
-export default class LinksScreen extends React.Component {
+export default class AccountItemDetailScreen extends React.Component {
   static navigationOptions = {
-    title: 'Wallet',
+    title: 'Account Item Detail',
     headerTitleStyle: {
       ...Platform.select({
         ios: {fontFamily: 'Arial',},
@@ -13,12 +12,13 @@ export default class LinksScreen extends React.Component {
     },
   };
 
+
   render() {
     return (
       <ScrollView style={styles.container}>
         <View>
           <Text>
-            Wallet
+            {JSON.stringify(this.props)}
           </Text>
         </View>
       </ScrollView>

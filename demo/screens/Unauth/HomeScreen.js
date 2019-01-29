@@ -18,50 +18,22 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
-  // didFocusSubscription = null;
-  //
-  // componentDidMount() {
-  //
-  //   const user = firebase.auth().currentUser;
-  //   console.log('Main Home user', user);
-  //   if (user !== null) {
-  //     this.props.navigation.navigate('Main');
-  //   }
-  //
-  //   this.didFocusSubscription = this.props.navigation.addListener(
-  //     'willFocus',
-  //     payload => {
-  //       const user = firebase.auth().currentUser;
-  //       // console.log('Main Home user', user);
-  //       if (user !== null) {
-  //         this.props.navigation.navigate('Main');
-  //       }
-  //     }
-  //   );
-  // }
-  //
-  // componentWillUnmount() {
-  //   if (this.didFocusSubscription !== null) {
-  //     this.didFocusSubscription.remove();
-  //   }
-  // }
 
   componentDidMount() {
-    console.log('Unauth componentDidMount');
+    // console.log('Unauth componentDidMount');
     // Bind the variable to the instance of the class.
     this.authFirebaseListener = firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
-
   }
 
   componentWillUnmount() {
-    console.log('Unauth componentWillUnmount');
+    // console.log('Unauth componentWillUnmount');
     this.authFirebaseListener && this.authFirebaseListener() // Unlisten it by calling it as a function
   }
 
   onAuthStateChanged = user => {
-    console.log('Unauth onAuthStateChanged');
+    // console.log('Unauth onAuthStateChanged');
     if (user !== null) {
-      console.log('Unauth navigate to main');
+      // console.log('Unauth navigate to main');
       this.props.navigation.navigate('Main');
     } else {
       // console.log('Unauth navigate to Unauth');
