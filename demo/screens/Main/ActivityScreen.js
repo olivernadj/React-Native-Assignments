@@ -29,10 +29,10 @@ export default class ActivityScreen extends React.Component {
     console.log('componentDidMount');
     this.setState({loading: true});
     const user = firebase.auth().currentUser;
-    console.log('user.uid', user.uid);
+    // console.log('user.uid', user.uid);
     firebase.database().ref('activity/' + user.uid).once('value', (snapshot) => {
       const res = snapshot.val();
-      console.log(res);
+      //  console.log(res);
       if (res !== null) {
         const activity = [];
         for (let key in res) {
@@ -65,6 +65,7 @@ export default class ActivityScreen extends React.Component {
   };
 
   renderRow = ({item}) => {
+    let itemCreated = new Date(item.created)
     return (
       <TouchableHighlight
         onPress={() => this.props.navigation.navigate('ActivityItemDetail', {
@@ -72,6 +73,7 @@ export default class ActivityScreen extends React.Component {
         })}
       >
         <ListItem
+          rightTitle={itemCreated.toISOString()}
           containerStyle={{ borderBottomWidth: 0 }}
           title={item.symbol + ' ' + item.action}
           subtitle={parseFloat(item.amount).toFixed(2)}

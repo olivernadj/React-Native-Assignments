@@ -4,6 +4,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import ActivityScreen from '../screens/Main/ActivityScreen';
+import ActivityItemDetailScreen from '../screens/Main/Activity/ActivityItemDetailScreen';
 import LinksScreen from '../screens/Main/LinksScreen';
 import UserScreen from '../screens/Main/UserScreen';
 import AccountScreen from '../screens/Main/AccountScreen';
@@ -12,6 +13,7 @@ import AccountItemVNDAddScreen from '../screens/Main/Account/AccountItemVNDAddSc
 
 const ActivityStack = createStackNavigator({
   Activity: ActivityScreen,
+  ActivityItemDetail: ActivityItemDetailScreen,
 });
 
 ActivityStack.navigationOptions = {
