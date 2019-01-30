@@ -45,12 +45,12 @@ export default class ActivityScreen extends React.Component {
     });
 
     // Bind the variable to the instance of the class.
-    this.authFirebaseListener = firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
+    // this.authFirebaseListener = firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
   }
 
   componentWillUnmount() {
     // console.log('Unauth componentWillUnmount');
-    this.authFirebaseListener && this.authFirebaseListener() // Unlisten it by calling it as a function
+    // this.authFirebaseListener && this.authFirebaseListener() // Unlisten it by calling it as a function
   }
 
   onAuthStateChanged = user => {

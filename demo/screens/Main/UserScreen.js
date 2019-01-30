@@ -30,7 +30,7 @@ export default class UserScreen extends React.Component {
     firebase.auth().signOut()
       .then((result) => {
         this.setState({user:null, loading:false});
-        // this.props.navigation.navigate('Unauth');
+        this.props.navigation.navigate('Unauth');
         // console.log('onfulfilled', result);
         // console.log('firebase.auth', firebase.auth().currentUser);
       })

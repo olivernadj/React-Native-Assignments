@@ -13,15 +13,15 @@ The following **required** functionality is completed:
   - [x] Sign out
   - [x] Register
   - [x] Handle routing for [authentication flow](https://reactnavigation.org/docs/en/auth-flow.html).
-- [ ] User wallet 
-  - [ ] See wallet...
-  - [ ] Topup...
+- [x] User wallet 
+  - [x] See wallet
+  - [x] Topup
   - [ ] Withdraw
-  - [ ] Transaction history
+  - [x] Transaction history
 - [ ] Marketplace
-  - [ ] List bids and asks
-  - [ ] Add bid
-  - [ ] Add ask
+  - [ ] List bids and asks..
+  - [ ] Add bid..
+  - [ ] Add ask..
   - [ ] Fok bid
   - [ ] For ask
 
