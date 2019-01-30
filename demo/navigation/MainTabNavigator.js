@@ -5,10 +5,11 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import ActivityScreen from '../screens/Main/ActivityScreen';
 import ActivityItemDetailScreen from '../screens/Main/Activity/ActivityItemDetailScreen';
-import UserScreen from '../screens/Main/UserScreen';
+import MarketplaceScreen from '../screens/Main/MarketplaceScreen'
 import AccountScreen from '../screens/Main/AccountScreen';
 import AccountItemDetailScreen from '../screens/Main/Account/AccountItemDetailScreen';
 import AccountItemVNDAddScreen from '../screens/Main/Account/AccountItemVNDAddScreen';
+import UserScreen from '../screens/Main/UserScreen';
 
 const ActivityStack = createStackNavigator({
   Activity: ActivityScreen,
@@ -23,6 +24,23 @@ ActivityStack.navigationOptions = ({ navigation }) => {
       <TabBarIcon
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'}
+      />
+    ),
+  };
+};
+
+const MarketplaceStack = createStackNavigator({
+  Marketplace: MarketplaceScreen,
+});
+
+MarketplaceStack.navigationOptions = ({ navigation }) => {
+  return {
+    tabBarVisible: navigation.state.index === 0,
+    tabBarLabel: 'Marketplace',
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === 'ios' ? 'ios-pulse' : 'md-pulse'}
       />
     ),
   };
@@ -66,6 +84,7 @@ UserStack.navigationOptions = ({ navigation }) => {
 
 export default createBottomTabNavigator({
   ActivityStack,
+  MarketplaceStack,
   AccountStack,
   UserStack,
 });
