@@ -64,12 +64,11 @@ export default class AccountScreen extends React.Component {
     )
   };
 
-  render () {
-    let walletList = <ActivityIndicator size="large" color="#ccc" buttonStyle={{marginTop:30}}/>;
-    let bookList = <ActivityIndicator size="large" color="#ccc" buttonStyle={{marginTop:30}}/>;
-
-    if (this.state.loading === false) {
-
+  renderWalletList = () => {
+    let walletList = null;
+    if (this.state.loading === true) {
+      walletList = <ActivityIndicator size="large" color="#ccc" buttonStyle={{marginTop: 30}}/>;
+    } else {
       const wallet = [];
       for (let key in this.state.account['wallet']) {
         wallet.push({name: key, amount: this.state.account['wallet'][key], kind: 'wallet'});
@@ -82,6 +81,15 @@ export default class AccountScreen extends React.Component {
           keyExtractor={item => item.name}
         />
       );
+    }
+    return walletList;
+  };
+
+  renderBookList = () => {
+    let bookList = null;
+    if (this.state.loading === true) {
+      bookList = <ActivityIndicator size="large" color="#ccc" buttonStyle={{marginTop:30}}/>;
+    } else {
       const book = [];
       for (let key in this.state.account['book']) {
         book.push({name: key, amount: this.state.account['book'][key], kind: 'book'});
@@ -94,21 +102,25 @@ export default class AccountScreen extends React.Component {
           keyExtractor={item => item.name}
         />
       );
-    }
 
+    }
+    return bookList;
+  };
+
+  render () {
     return (
       <ScrollView style={styles.container}>
         <Card title="My Wallet">
           <Text style={{marginBottom: 10}}>
             Accessible money.
           </Text>
-          {walletList}
+          {this.renderWalletList()}
         </Card>
         <Card title="My Book">
           <Text style={{marginBottom: 10}}>
             Owned tokens.
           </Text>
-          {bookList}
+          {this.renderBookList()}
         </Card>
         <View style={{ margin:50, flex: 1, flexDirection: 'row', justifyContent:'center'}}>
           <Text> Have a question? </Text>

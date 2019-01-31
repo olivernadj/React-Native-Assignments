@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View, Text, Platform, ActivityIndicator} from 'react-native';
 import {Button, FormInput, FormLabel} from "react-native-elements";
-import firebase from "../../../firebase";
+import firebase from "../../../../firebase";
 
 export default class AccountItemVNDAddScreen extends React.Component {
   static navigationOptions = {

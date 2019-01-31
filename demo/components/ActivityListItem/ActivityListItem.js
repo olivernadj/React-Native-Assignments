@@ -7,25 +7,20 @@ import { ListItem } from "react-native-elements";
 class ActivityListItem extends PureComponent {
 
   render() {
-    // console.log({uri: 'https://image.tmdb.org/t/p/w185_and_h278_bestv2' + this.props.poster_path});
+    const item = this.props.item;
+    const itemCreated = new Date(item.created);
     return (
       <TouchableHighlight
-        onPress={() => this.props.navigation.navigate('Detail', {
-          movie: {
-            title: this.props.title,
-            overview: this.props.overview,
-            avatar: { uri: 'https://image.tmdb.org/t/p/w185_and_h278_bestv2' + this.props.poster_path },
-          },
-        })}
+        onPress={this.props.touched}
       >
         <ListItem
-          roundAvatar
-          title={this.props.title}
-          subtitle={this.props.overview}
-          avatar={{ uri: 'https://image.tmdb.org/t/p/w185_and_h278_bestv2' + this.props.poster_path }}
+          rightTitle={itemCreated.toISOString()}
+          containerStyle={{ borderBottomWidth: 0 }}
+          title={item.symbol + ' ' + item.action}
+          subtitle={parseFloat(item.amount).toFixed(2)}
         />
       </TouchableHighlight>
-    );
+    )
   }
 }
 

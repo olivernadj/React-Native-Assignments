@@ -72,10 +72,18 @@ export default class AccountItemDetailScreen extends React.Component {
 
   actionHandler = (label) => {
     const item = this.props.navigation.state.params.item;
-    console.log(item.name + label);
-    switch(item.name + label) {
+    const expression = item.name + label;
+    //console.log(expression);
+    switch(expression) {
       case 'VNDAdd':
         this.props.navigation.navigate('AccountItemVNDAdd', {
+          item: item
+        });
+        break;
+      case 'VNDActivity':
+      case 'ETHActivity':
+      case 'SVTActivity':
+        this.props.navigation.navigate('AccountItem' + expression, {
           item: item
         });
         break;

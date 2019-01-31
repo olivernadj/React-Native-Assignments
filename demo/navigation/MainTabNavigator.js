@@ -8,11 +8,14 @@ import ActivityItemDetailScreen from '../screens/Main/Activity/ActivityItemDetai
 import MarketplaceScreen from '../screens/Main/MarketplaceScreen'
 import AccountScreen from '../screens/Main/AccountScreen';
 import AccountItemDetailScreen from '../screens/Main/Account/AccountItemDetailScreen';
-import AccountItemVNDAddScreen from '../screens/Main/Account/AccountItemVNDAddScreen';
+import AccountItemVNDAddScreen from '../screens/Main/Account/VND/AccountItemVNDAddScreen';
 import UserScreen from '../screens/Main/UserScreen';
 
 const ActivityStack = createStackNavigator({
-  Activity: ActivityScreen,
+  Activity: {
+    screen: ActivityScreen,
+    params: { detailScreen: 'ActivityItemDetail' },
+  },
   ActivityItemDetail: ActivityItemDetailScreen,
 });
 
@@ -50,6 +53,30 @@ const AccountStack = createStackNavigator({
   Account: AccountScreen,
   AccountItemDetail: AccountItemDetailScreen,
   AccountItemVNDAdd: AccountItemVNDAddScreen,
+  AccountItemVNDActivity: {
+    screen: ActivityScreen,
+    params: { detailScreen: 'ActivityItemVNDDetail' },
+    navigationOptions: ({ navigation }) => ({
+      title: "VND Activity",
+    }),
+  },
+  ActivityItemVNDDetail: ActivityItemDetailScreen,
+  AccountItemETHActivity: {
+    screen: ActivityScreen,
+    params: { detailScreen: 'ActivityItemETHDetail' },
+    navigationOptions: ({ navigation }) => ({
+      title: "ETH Activity",
+    }),
+  },
+  ActivityItemETHDetail: ActivityItemDetailScreen,
+  AccountItemSVTActivity: {
+    screen: ActivityScreen,
+    params: { detailScreen: 'ActivityItemSVTDetail' },
+    navigationOptions: ({ navigation }) => ({
+      title: "SVT Activity",
+    }),
+  },
+  ActivityItemSVTDetail: ActivityItemDetailScreen,
 });
 
 AccountStack.navigationOptions = ({ navigation }) => {
