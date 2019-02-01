@@ -6,7 +6,7 @@ import firebase from "../../firebase";
 
 export default class ActivityScreen extends React.Component {
   static navigationOptions = {
-    title: 'Activity',
+    title: 'My Activity',
     headerTitleStyle: {
       ...Platform.select({
         ios: {fontFamily: 'Arial',},

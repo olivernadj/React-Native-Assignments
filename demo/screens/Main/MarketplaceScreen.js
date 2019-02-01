@@ -78,7 +78,7 @@ export default class MarketplaceScreen extends React.Component {
         if (res !== null) {
           const bids = [];
           for (let key in res) {
-            bids.push({key:key, ...res[key], action:'bid'});
+            bids.push({key:key, ...res[key], action:'bid', symbol:'SVT'});
           }
           this.setState({bidsLoading: false, bids:bids});
         } else {
@@ -94,7 +94,7 @@ export default class MarketplaceScreen extends React.Component {
         if (res !== null) {
           const asks = [];
           for (let key in res) {
-            asks.push({key:key, ...res[key], action:'ask'});
+            asks.push({key:key, ...res[key], action:'ask', symbol:'SVT'});
           }
           this.setState({asksLoading: false, asks:asks});
         } else {

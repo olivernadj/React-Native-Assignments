@@ -5,7 +5,7 @@ import firebase from "../../firebase";
 
 export default class AccountScreen extends React.Component {
   static navigationOptions = {
-    title: 'Account',
+    title: 'My Account',
     headerTitleStyle: {
       ...Platform.select({
         ios: {fontFamily: 'Arial',},
