@@ -6,7 +6,7 @@ import {
   Text,
   Platform,
   ActivityIndicator,
-  FlatList
+  FlatList, TouchableHighlight
 } from 'react-native';
 import {ButtonGroup, Card, Divider} from 'react-native-elements';
 import firebase from "../../firebase";
@@ -26,14 +26,42 @@ export default class MarketplaceScreen extends React.Component {
 
   state = {
     selectedIndex: 0,
-    bids: [],
     bidsLoading: false,
-    asks: [],
+    bids: [],
     asksLoading: false,
+    asks: [],
+    accountLoading: false,
+    account: {
+      book: {
+        SVT: 0
+      },
+      wallet: {
+        VND: 0,
+        ETH: 0
+      }
+    },
   };
 
   componentDidMount() {
     this.updateTabContent();
+    this.setState({
+      accountLoading: true,
+    });
+    const user = firebase.auth().currentUser;
+    firebase.database().ref('account/' + user.uid).once('value', (snapshot) => {
+      const res = snapshot.val();
+      if (res !== null) {
+        const mergedAccount = this.state.account;
+        for (let key in this.state.account) {
+          if (res[key] !== undefined)  {
+            mergedAccount[key] = {...mergedAccount[key], ...res[key]}
+          }
+        }
+        this.setState({accountLoading: false, account:mergedAccount});
+      } else {
+        this.setState({accountLoading: false});
+      }
+    });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -105,11 +133,22 @@ export default class MarketplaceScreen extends React.Component {
         );
       }
     }
+    let offerLink = null;
+
+    if (this.state.accountLoading === false && this.state.account.wallet.VND > 0 ) {
+      offerLink = (<TouchableHighlight onPress={() => {this.props.navigation.navigate('MarketplaceSVTBuy', {
+          item: {name: 'SVT', amount: this.state.account['book']['SVT'], kind: 'book'}
+        })}}>
+        <Text style={{fontWeight: 'bold', color:'blue', textDecorationLine: 'underline'}}> Let's place a buying offer. </Text>
+      </TouchableHighlight>);
+    }
+
     return (
       <Card title="Bids">
-        <Text style={{marginBottom: 10}}>
-          Buying offers.
-        </Text>
+        <View style={{ marginBottom: 10, flex: 1, flexDirection: 'column'}}>
+          <Text> Buying offers. </Text>
+          {offerLink}
+        </View>
         {bids}
       </Card>
     );
@@ -139,11 +178,23 @@ export default class MarketplaceScreen extends React.Component {
         );
       }
     }
+
+    let offerLink = null;
+
+    if (this.state.accountLoading === false && this.state.account.book.SVT > 0 ) {
+      offerLink = (<TouchableHighlight onPress={() => {this.props.navigation.navigate('MarketplaceSVTSell', {
+          item: {name: 'SVT', amount: this.state.account['book']['SVT'], kind: 'book'}
+        })}}>
+        <Text style={{fontWeight: 'bold', color:'blue', textDecorationLine: 'underline'}}> Let's place a selling offer. </Text>
+      </TouchableHighlight>);
+    }
+
     return (
       <Card title="Asks">
-        <Text style={{marginBottom: 10}}>
-          Selling offers.
-        </Text>
+        <View style={{ marginBottom: 10, flex: 1, flexDirection: 'column'}}>
+          <Text> Selling offers. </Text>
+          {offerLink}
+        </View>
         {asks}
       </Card>
     );

@@ -76,9 +76,9 @@ export default class SVTBuyScreen extends React.Component {
                      keyboardType="numeric"/>
           {formFooter}
         </Card>
-        {/*<Text>*/}
-          {/*{JSON.stringify(this.props)}}*/}
-        {/*</Text>*/}
+        <Text>
+          {JSON.stringify(this.props)}}
+        </Text>
       </ScrollView>
     );
   }

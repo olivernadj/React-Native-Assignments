@@ -41,6 +41,8 @@ const MarketplaceStack = createStackNavigator({
     params: { detailScreen: 'MarketplaceItemDetail' },
   },
   MarketplaceItemDetail: MarketplaceItemDetailScreen,
+  MarketplaceSVTBuy: SVTBuyScreen,
+  MarketplaceSVTSell: SVTSellScreen,
 });
 
 MarketplaceStack.navigationOptions = ({ navigation }) => {

@@ -8,7 +8,7 @@
 
 The following **required** functionality is completed:
 
-- [ ] User Auth
+- [x] User Auth
   - [x] Log in 
   - [x] Sign out
   - [x] Register
@@ -22,8 +22,8 @@ The following **required** functionality is completed:
   - [x] List bids and asks
   - [x] Add bid
   - [x] Add ask
-  - [ ] Fok bid
-  - [ ] For ask
+  - [ ] Fok bid..
+  - [ ] For ask..
 
 The following **optional** features are implemented:
 
