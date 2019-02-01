@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet, View, Text, Platform, ActivityIndicator} from 'r
 import {Button, FormInput, FormLabel} from "react-native-elements";
 import firebase from "../../../../firebase";
 
-export default class AccountItemVNDAddScreen extends React.Component {
+export default class VNDAddScreen extends React.Component {
   static navigationOptions = {
     title: 'Add VND',
     headerTitleStyle: {
@@ -59,7 +59,8 @@ export default class AccountItemVNDAddScreen extends React.Component {
       <ScrollView style={styles.container} keyboardShouldPersistTaps={'always'} >
         <FormLabel>Amount in VND</FormLabel>
         <FormInput onChangeText={(v) => this.setState({amount: v})}
-                   containerStyle={{borderColor: '#ccc', borderWidth: 1}}/>
+                   containerStyle={{borderColor: '#ccc', borderWidth: 1}}
+                   keyboardType="numeric"/>
         {formFooter}
         {/*<Text>*/}
           {/*{JSON.stringify(this.props)}*!/*/}
@@ -71,8 +72,10 @@ export default class AccountItemVNDAddScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
+    //flex: 1,
+    // borderColor: 'green',
+    // borderWidth: 1,
+    //paddingTop: 30,
+    //backgroundColor: '#fff',
   },
 });

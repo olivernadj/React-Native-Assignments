@@ -8,7 +8,9 @@ import ActivityItemDetailScreen from '../screens/Main/Activity/ActivityItemDetai
 import MarketplaceScreen from '../screens/Main/MarketplaceScreen'
 import AccountScreen from '../screens/Main/AccountScreen';
 import AccountItemDetailScreen from '../screens/Main/Account/AccountItemDetailScreen';
-import AccountItemVNDAddScreen from '../screens/Main/Account/VND/AccountItemVNDAddScreen';
+import VNDAddScreen from '../screens/Main/Account/VND/VNDAddScreen';
+import SVTBuyScreen from '../screens/Main/Account/SVT/SVTBuyScreen';
+import SVTSellScreen from '../screens/Main/Account/SVT/SVTSellScreen';
 import UserScreen from '../screens/Main/UserScreen';
 
 const ActivityStack = createStackNavigator({
@@ -52,31 +54,33 @@ MarketplaceStack.navigationOptions = ({ navigation }) => {
 const AccountStack = createStackNavigator({
   Account: AccountScreen,
   AccountItemDetail: AccountItemDetailScreen,
-  AccountItemVNDAdd: AccountItemVNDAddScreen,
-  AccountItemVNDActivity: {
+  VNDAdd: VNDAddScreen,
+  VNDActivity: {
     screen: ActivityScreen,
-    params: { detailScreen: 'ActivityItemVNDDetail' },
+    params: { detailScreen: 'VNDDetail' },
     navigationOptions: ({ navigation }) => ({
       title: "VND Activity",
     }),
   },
-  ActivityItemVNDDetail: ActivityItemDetailScreen,
-  AccountItemETHActivity: {
+  VNDDetail: ActivityItemDetailScreen,
+  ETHActivity: {
     screen: ActivityScreen,
-    params: { detailScreen: 'ActivityItemETHDetail' },
+    params: { detailScreen: 'ETHDetail' },
     navigationOptions: ({ navigation }) => ({
       title: "ETH Activity",
     }),
   },
-  ActivityItemETHDetail: ActivityItemDetailScreen,
-  AccountItemSVTActivity: {
+  ETHDetail: ActivityItemDetailScreen,
+  SVTActivity: {
     screen: ActivityScreen,
-    params: { detailScreen: 'ActivityItemSVTDetail' },
+    params: { detailScreen: 'SVTDetail' },
     navigationOptions: ({ navigation }) => ({
       title: "SVT Activity",
     }),
   },
-  ActivityItemSVTDetail: ActivityItemDetailScreen,
+  SVTDetail: ActivityItemDetailScreen,
+  SVTBuy: SVTBuyScreen,
+  SVTSell: SVTSellScreen,
 });
 
 AccountStack.navigationOptions = ({ navigation }) => {

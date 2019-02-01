@@ -71,10 +71,12 @@ export default class SignUpScreen extends React.Component {
         <ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
           <FormLabel>Email</FormLabel>
           <FormInput onChangeText={(v) => this.setState({email: v})}
-                     containerStyle={{borderColor: '#ccc', borderWidth: 1}}/>
+                     containerStyle={{borderColor: '#ccc', borderWidth: 1}}
+                     keyboardType="email-address"/>
           <FormLabel>Password</FormLabel>
-          <FormInput onChangeText={(v) => this.setState({password: v})} secureTextEntry={true}
-                     containerStyle={{borderColor: '#ccc', borderWidth: 1}}/>
+          <FormInput onChangeText={(v) => this.setState({password: v})}
+                     containerStyle={{borderColor: '#ccc', borderWidth: 1}}
+                     secureTextEntry={true}/>
           {formFooter}
         </ScrollView>
       );

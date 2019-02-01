@@ -1,7 +1,9 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, YellowBox } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+
+YellowBox.ignoreWarnings(['Setting a timer for a long period of time']);
 
 export default class App extends React.Component {
   state = {
@@ -60,3 +62,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+
+console.ignoredYellowBox = ['Setting a timer'];

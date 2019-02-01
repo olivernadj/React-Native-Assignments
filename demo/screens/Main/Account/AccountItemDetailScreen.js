@@ -75,15 +75,13 @@ export default class AccountItemDetailScreen extends React.Component {
     const expression = item.name + label;
     //console.log(expression);
     switch(expression) {
-      case 'VNDAdd':
-        this.props.navigation.navigate('AccountItemVNDAdd', {
-          item: item
-        });
-        break;
-      case 'VNDActivity':
       case 'ETHActivity':
+      case 'SVTBuy':
+      case 'SVTSell':
       case 'SVTActivity':
-        this.props.navigation.navigate('AccountItem' + expression, {
+      case 'VNDAdd':
+      case 'VNDActivity':
+        this.props.navigation.navigate(expression, {
           item: item
         });
         break;
@@ -141,9 +139,11 @@ export default class AccountItemDetailScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
+    //flex: 1,
+    // borderColor: 'green',
+    // borderWidth: 1,
+    //paddingTop: 30,
+    //backgroundColor: '#fff',
   },
   actionContainer: {
     width: 50,

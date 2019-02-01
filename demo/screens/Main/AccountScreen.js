@@ -136,8 +136,10 @@ export default class AccountScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 30,
-    backgroundColor: '#fff',
+    //flex: 1,
+    // borderColor: 'green',
+    // borderWidth: 1,
+    //paddingTop: 30,
+    //backgroundColor: '#fff',
   },
 });
