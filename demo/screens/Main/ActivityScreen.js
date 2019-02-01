@@ -1,7 +1,7 @@
 import React from 'react';
 import {ActivityIndicator, FlatList, Platform, ScrollView, StyleSheet, TouchableHighlight, View} from 'react-native';
 import {Divider, Text} from "react-native-elements";
-import ActivityListItem from '../../components/ActivityListItem/ActivityListItem';
+import ActivityListItem from '../../components/Activity/ActivityListItem';
 import firebase from "../../firebase";
 
 export default class ActivityScreen extends React.Component {

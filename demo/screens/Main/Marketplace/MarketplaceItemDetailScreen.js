@@ -1,9 +1,9 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View, Text, Platform} from 'react-native';
 
-export default class ActivityItemDetailScreens extends React.Component {
+export default class MarketplaceItemDetailScreens extends React.Component {
   static navigationOptions = {
-    title: 'Activity Item',
+    title: 'Marketplace Item',
     headerTitleStyle: {
       ...Platform.select({
         ios: {fontFamily: 'Arial',},

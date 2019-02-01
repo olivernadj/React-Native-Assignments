@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import ActivityScreen from '../screens/Main/ActivityScreen';
 import ActivityItemDetailScreen from '../screens/Main/Activity/ActivityItemDetailScreen';
 import MarketplaceScreen from '../screens/Main/MarketplaceScreen'
+import MarketplaceItemDetailScreen from '../screens/Main/Marketplace/MarketplaceItemDetailScreen'
 import AccountScreen from '../screens/Main/AccountScreen';
 import AccountItemDetailScreen from '../screens/Main/Account/AccountItemDetailScreen';
 import VNDAddScreen from '../screens/Main/Account/VND/VNDAddScreen';
@@ -35,7 +36,11 @@ ActivityStack.navigationOptions = ({ navigation }) => {
 };
 
 const MarketplaceStack = createStackNavigator({
-  Marketplace: MarketplaceScreen,
+  Marketplace: {
+    screen: MarketplaceScreen,
+    params: { detailScreen: 'MarketplaceItemDetail' },
+  },
+  MarketplaceItemDetail: MarketplaceItemDetailScreen,
 });
 
 MarketplaceStack.navigationOptions = ({ navigation }) => {

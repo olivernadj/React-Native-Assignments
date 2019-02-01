@@ -18,10 +18,10 @@ The following **required** functionality is completed:
   - [x] Topup
   - [ ] Withdraw
   - [x] Transaction history
-- [ ] Marketplace
-  - [ ] List bids and asks..
-  - [ ] Add bid..
-  - [ ] Add ask..
+- [ ] Marketplace..
+  - [x] List bids and asks
+  - [x] Add bid
+  - [x] Add ask
   - [ ] Fok bid
   - [ ] For ask
 

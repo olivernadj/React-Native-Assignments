@@ -36,7 +36,7 @@ export default class SVTBuyScreen extends React.Component {
       acivityRef.push({
         kind: item.kind,
         symbol: item.name,
-        action: 'bids',
+        action: 'bid',
         price: this.state.price,
         amount: this.state.amount,
         created: Date.now()
@@ -76,9 +76,9 @@ export default class SVTBuyScreen extends React.Component {
                      keyboardType="numeric"/>
           {formFooter}
         </Card>
-        <Text>
-          {JSON.stringify(this.props)}}
-        </Text>
+        {/*<Text>*/}
+          {/*{JSON.stringify(this.props)}}*/}
+        {/*</Text>*/}
       </ScrollView>
     );
   }

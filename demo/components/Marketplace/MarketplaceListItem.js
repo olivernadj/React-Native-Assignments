@@ -2,9 +2,9 @@ import React, {PureComponent} from 'react';
 import {
   TouchableHighlight
 } from 'react-native';
-import { ListItem } from "react-native-elements";
+import {Icon, ListItem} from "react-native-elements";
 
-class ActivityListItem extends PureComponent {
+class MarketplaceListItem extends PureComponent {
 
   render() {
     const item = this.props.item;
@@ -16,12 +16,22 @@ class ActivityListItem extends PureComponent {
         <ListItem
           rightTitle={itemCreated.toISOString()}
           containerStyle={{ borderBottomWidth: 0 }}
-          title={item.symbol + ' ' + item.action}
-          subtitle={parseFloat(item.amount).toFixed(2)}
+          title={parseFloat(item.price) + ' VND'}
+          subtitle={parseFloat(item.amount).toFixed(2) + ' SVT'}
+          leftIcon={{
+            name:actionIcons[item.action],
+            color:'#ccc',
+          }}
         />
       </TouchableHighlight>
     )
   }
 }
 
-export default ActivityListItem;
+export default MarketplaceListItem;
+
+
+const actionIcons = {
+  bid: 'unfold-less',
+  ask: 'unfold-more',
+};
