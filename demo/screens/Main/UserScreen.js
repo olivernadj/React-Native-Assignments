@@ -1,6 +1,6 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator, TouchableHighlight, View, AsyncStorage} from 'react-native';
-import {FormLabel, FormInput, Button, Divider} from 'react-native-elements'
+import {ScrollView, StyleSheet, Text, Platform, ActivityIndicator, View} from 'react-native';
+import {Button} from 'react-native-elements'
 import firebase from '../../firebase.js';
 
 
@@ -23,28 +23,54 @@ export default class UserScreen extends React.Component {
     loading: false
   };
 
+  componentDidMount () {
+    //  console.log('componentDidMount');
+    this.updateUser();
+    this.willFocus = this.props.navigation.addListener(
+      'willFocus',
+      payload => {
+        this.updateUser();
+      }
+    );
+  }
 
+  componentWillUnmount() {
+    this.willFocus.remove();
+  }
+
+  updateUser = () => {
+    const user = firebase.auth().currentUser;
+    if (user === null) {
+      this.props.navigation.navigate('Unauth');
+    }
+  };
 
   signOutHandler = () => {
-    this.setState({loading:true});
-    firebase.auth().signOut()
-      .then((result) => {
-        this.setState({user:null, loading:false});
-        // this.props.navigation.navigate('Unauth');
-        this.props.navigation.reset('Unauth');
-        // console.log('onfulfilled', result);
-        // console.log('firebase.auth', firebase.auth().currentUser);
-      })
-      .catch((error) => {
-        this.setState({loading:false});
-        // Handle Errors here.
-        if (error.code === 'auth/wrong-password') {
-          alert('Wrong password.');
-        } else {
-          alert(error.message);
-        }
-        console.log('onrejected', error);
-      });
+    const user = firebase.auth().currentUser;
+    if (user === null) {
+      this.props.navigation.navigate('Unauth');
+    } else {
+      this.setState({loading: true});
+      firebase.auth().signOut()
+        .then((result) => {
+          console.log('onfulfilled', result);
+          console.log('firebase.auth', firebase.auth().currentUser);
+          this.setState({user: null, loading: false});
+          // this.props.navigation.navigate('Unauth');
+          this.props.navigation.navigate('Unauth');
+        })
+        .catch((error) => {
+          console.log('UserScreen firebase.auth:', firebase.auth().currentUser);
+          console.log('UserScreen onrejected:', error);
+          this.setState({loading: false});
+          // Handle Errors here.
+          if (error.code === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(error.message);
+          }
+        });
+    }
   };
 
   signUpHandler = () => {

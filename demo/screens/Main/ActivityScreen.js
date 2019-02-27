@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, FlatList, Platform, ScrollView, StyleSheet, TouchableHighlight, View} from 'react-native';
+import {ActivityIndicator, FlatList, Platform, ScrollView, StyleSheet, TouchableHighlight, View, RefreshControl} from 'react-native';
 import {Divider, Text} from "react-native-elements";
 import ActivityListItem from '../../components/Activity/ActivityListItem';
 import firebase from "../../firebase";
@@ -17,28 +17,51 @@ export default class ActivityScreen extends React.Component {
 
   state = {
     activity: [],
+    refreshing: false,
     loading: false,
   };
 
   componentDidMount () {
     //  console.log('componentDidMount');
-    this.setState({loading: true});
-    const user = firebase.auth().currentUser;
-    // console.log('user.uid', user.uid);
-    firebase.database().ref('activity/' + user.uid).once('value', (snapshot) => {
-      const res = snapshot.val();
-      //  console.log(res);
-      if (res !== null) {
-        const activity = [];
-        for (let key in res) {
-          activity.push({key:key, ...res[key]});
-        }
-        this.setState({loading: false, activity:activity});
-      } else {
-        this.setState({loading: false});
+    this.updateActivity();
+    this.willFocus = this.props.navigation.addListener(
+      'willFocus',
+      payload => {
+        this.updateActivity();
       }
-    });
+    );
   }
+
+  componentWillUnmount() {
+    this.willFocus.remove();
+  }
+
+  updateActivity = () => {
+    const user = firebase.auth().currentUser;
+    if (user === null) {
+      this.props.navigation.navigate('Unauth');
+    } else {
+      this.setState({loading: true});
+      firebase.database().ref('activity/' + user.uid).once('value', (snapshot) => {
+        const res = snapshot.val();
+        //  console.log(res);
+        if (res !== null) {
+          const activity = [];
+          for (let key in res) {
+            activity.push({key: key, ...res[key]});
+          }
+          this.setState({loading: false, activity: activity});
+        } else {
+          this.setState({loading: false});
+        }
+      });
+    }
+  };
+
+  refreshHandler = () => {
+    // reset all screens state
+    this.props.navigation.navigate('Unauth');
+  };
 
   render () {
     let activityList = <ActivityIndicator size="large" color="#ccc" buttonStyle={{marginTop:30}}/>;
@@ -68,7 +91,12 @@ export default class ActivityScreen extends React.Component {
       }
     }
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} refreshControl={
+        <RefreshControl
+          refreshing={this.state.refreshing}
+          onRefresh={this.refreshHandler}
+        />
+      }>
         {activityList}
       </ScrollView>
     )

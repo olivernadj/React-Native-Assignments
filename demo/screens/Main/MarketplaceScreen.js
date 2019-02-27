@@ -62,45 +62,61 @@ export default class MarketplaceScreen extends React.Component {
         this.setState({accountLoading: false});
       }
     });
+    this.willFocus = this.props.navigation.addListener(
+      'willFocus',
+      payload => {
+        this.updateTabContent();
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    this.willFocus.remove();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    this.updateTabContent();
+    if (this.state.selectedIndex !== prevState.selectedIndex) {
+      this.updateTabContent();
+    }
   }
 
   updateTabContent = () => {
-    // console.log(this.state);
-    if (this.state.selectedIndex === 0 && this.state.bids.length === 0 && this.state.bidsLoading === false) {
-      this.setState({bidsLoading: true});
-      firebase.database().ref('bids/' + 'SVT').once('value', (snapshot) => {
-        const res = snapshot.val();
-        // console.log(res);
-        if (res !== null) {
-          const bids = [];
-          for (let key in res) {
-            bids.push({key:key, ...res[key], action:'bid', symbol:'SVT'});
+    const user = firebase.auth().currentUser;
+    if (user === null) {
+      this.props.navigation.navigate('Unauth');
+    } else {
+      if (this.state.selectedIndex === 0 && this.state.bidsLoading === false) {
+        this.setState({bidsLoading: true});
+        firebase.database().ref('bids/' + 'SVT').once('value', (snapshot) => {
+          const res = snapshot.val();
+          // console.log(res);
+          if (res !== null) {
+            const bids = [];
+            for (let key in res) {
+              bids.push({key: key, ...res[key], action: 'bid', symbol: 'SVT'});
+            }
+            this.setState({bidsLoading: false, bids: bids});
+          } else {
+            this.setState({bidsLoading: false});
           }
-          this.setState({bidsLoading: false, bids:bids});
-        } else {
-          this.setState({bidsLoading: false});
-        }
-      });
-    }
-    if (this.state.selectedIndex === 1 && this.state.asks.length === 0 && this.state.asksLoading === false) {
-      this.setState({asksLoading: true});
-      firebase.database().ref('asks/' + 'SVT').once('value', (snapshot) => {
-        const res = snapshot.val();
-        // console.log(res);
-        if (res !== null) {
-          const asks = [];
-          for (let key in res) {
-            asks.push({key:key, ...res[key], action:'ask', symbol:'SVT'});
+        });
+      }
+      if (this.state.selectedIndex === 1 && this.state.asksLoading === false) {
+        this.setState({asksLoading: true});
+        firebase.database().ref('asks/' + 'SVT').once('value', (snapshot) => {
+          const res = snapshot.val();
+          // console.log(res);
+          if (res !== null) {
+            const asks = [];
+            for (let key in res) {
+              asks.push({key: key, ...res[key], action: 'ask', symbol: 'SVT'});
+            }
+            this.setState({asksLoading: false, asks: asks});
+          } else {
+            this.setState({asksLoading: false});
           }
-          this.setState({asksLoading: false, asks:asks});
-        } else {
-          this.setState({asksLoading: false});
-        }
-      });
+        });
+      }
     }
   };
 

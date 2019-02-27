@@ -27,26 +27,44 @@ export default class AccountScreen extends React.Component {
     },
   };
 
-  componentDidMount() {
-    this.setState({
-      loading: true,
-    });
-    const user = firebase.auth().currentUser;
-    firebase.database().ref('account/' + user.uid).once('value', (snapshot) => {
-      const res = snapshot.val();
-      if (res !== null) {
-        const mergedAccount = this.state.account;
-        for (let key in this.state.account) {
-          if (res[key] !== undefined)  {
-            mergedAccount[key] = {...mergedAccount[key], ...res[key]}
-          }
-        }
-        this.setState({loading: false, account:mergedAccount});
-      } else {
-        this.setState({loading: false});
+  componentDidMount () {
+    //  console.log('componentDidMount');
+    this.updateAccount();
+    this.willFocus = this.props.navigation.addListener(
+      'willFocus',
+      payload => {
+        this.updateAccount();
       }
-    });
+    );
   }
+
+  componentWillUnmount() {
+    this.willFocus.remove();
+  }
+
+  updateAccount = () => {
+    const user = firebase.auth().currentUser;
+    if (user === null) {
+      this.props.navigation.navigate('Unauth');
+    } else {
+      this.setState({loading: true});
+      const user = firebase.auth().currentUser;
+      firebase.database().ref('account/' + user.uid).once('value', (snapshot) => {
+        const res = snapshot.val();
+        if (res !== null) {
+          const mergedAccount = this.state.account;
+          for (let key in this.state.account) {
+            if (res[key] !== undefined) {
+              mergedAccount[key] = {...mergedAccount[key], ...res[key]}
+            }
+          }
+          this.setState({loading: false, account: mergedAccount});
+        } else {
+          this.setState({loading: false});
+        }
+      });
+    }
+  };
 
   renderRow = ({item}) => {
     return (

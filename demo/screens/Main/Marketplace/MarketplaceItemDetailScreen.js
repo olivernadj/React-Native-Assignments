@@ -34,8 +34,10 @@ export default class MarketplaceItemDetailScreens extends React.Component {
     this.setState({loading:true});
     const item = this.props.navigation.state.params.item;
     const user = firebase.auth().currentUser;
-    const acivityRef = firebase.database().ref('activity/' + user.uid);
-      acivityRef.push({
+    //const activityRef = firebase.database().ref('activity/' + user.uid);
+    const activityRef = firebase.database().ref('/queue');
+    activityRef.push({
+        user: user.uid,
         kind: 'book',
         symbol: item.symbol,
         action: 'fok' + this.state.name,

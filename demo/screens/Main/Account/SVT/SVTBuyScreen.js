@@ -32,8 +32,10 @@ export default class SVTBuyScreen extends React.Component {
       amount: this.state.amount,
       created: Date.now()
     }).then((result) => {
-      const acivityRef = firebase.database().ref('activity/' + user.uid);
-      acivityRef.push({
+      // const activityRef = firebase.database().ref('activity/' + user.uid);
+      const activityRef = firebase.database().ref('/queue');
+      activityRef.push({
+        user: user.uid,
         kind: item.kind,
         symbol: item.name,
         action: 'bid',

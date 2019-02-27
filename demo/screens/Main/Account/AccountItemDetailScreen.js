@@ -117,6 +117,8 @@ export default class AccountItemDetailScreen extends React.Component {
       });
     }
 
+    let label = (item.kind === 'wallet') ? 'Accessible money.' : 'Owned tokens.';
+
     return (
       <ScrollView style={styles.container}>
         <View>
@@ -125,7 +127,7 @@ export default class AccountItemDetailScreen extends React.Component {
           {/*</Text>*/}
           <Card title={item.amount.toFixed(2) + " " + item.name}>
             <Text style={{marginBottom: 10}}>
-              Owned tokens.
+              {label}
             </Text>
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap'}}>
               {actionIcons}
