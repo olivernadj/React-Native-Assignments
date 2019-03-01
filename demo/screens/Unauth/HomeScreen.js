@@ -13,13 +13,13 @@ export default class HomeScreen extends React.Component {
 
 
   componentDidMount() {
-    console.log('Unauth componentDidMount');
+    // console.log('Unauth componentDidMount');
     // Bind the variable to the instance of the class.
     this.authFirebaseListener = firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
   }
 
   componentWillUnmount() {
-    console.log('Unauth componentWillUnmount');
+    // console.log('Unauth componentWillUnmount');
     // this.authFirebaseListener && this.authFirebaseListener() // Unlisten it by calling it as a function
   }
 

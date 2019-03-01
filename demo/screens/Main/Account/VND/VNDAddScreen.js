@@ -34,8 +34,9 @@ export default class VNDAddScreen extends React.Component {
           kind: item.kind,
           symbol: item.name,
           action: 'add',
-          amount: this.state.amount,
-          created: Date.now()
+          amount: Number(this.state.amount),
+          status: 'pending',
+          created: Date.now(),
         });
         this.setState({loading:false});
         this.props.navigation.navigate('Unauth'); // force navigation route clean up. a bit hack.

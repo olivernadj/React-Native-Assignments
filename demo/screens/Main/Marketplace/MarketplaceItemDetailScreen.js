@@ -34,17 +34,18 @@ export default class MarketplaceItemDetailScreens extends React.Component {
     this.setState({loading:true});
     const item = this.props.navigation.state.params.item;
     const user = firebase.auth().currentUser;
-    //const activityRef = firebase.database().ref('activity/' + user.uid);
     const activityRef = firebase.database().ref('/queue');
     activityRef.push({
-        user: user.uid,
-        kind: 'book',
-        symbol: item.symbol,
-        action: 'fok' + this.state.name,
-        price: this.state.price,
-        amount: this.state.amount,
-        status: 'pending',
-        created: Date.now()
+      ref: item.key,
+      user: user.uid,
+      kind: 'book',
+      symbol: item.symbol,
+      action: 'fok' + this.state.name,
+      price: Number(this.state.price),
+      amount: Number(this.state.amount),
+      currency: item.name,
+      status: 'pending',
+      created: Date.now(),
     }).then((result) => {
       this.setState({loading:false});
       this.props.navigation.navigate('Unauth'); // force navigation route clean up. a bit hack.
