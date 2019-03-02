@@ -32,7 +32,7 @@ export default class VNDAddScreen extends React.Component {
         activityRef.push({
           user: user.uid,
           kind: item.kind,
-          symbol: item.name,
+          currency: item.name,
           action: 'add',
           amount: Number(this.state.amount),
           status: 'pending',
